@@ -1,0 +1,66 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\boles\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add bodyparser
+
+PATH: 
+  C:\Python312\Scripts\;C:\Python312\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32\wbem;C:\WINDOWS\system32\windowspowershell\v1.0\;c:\windows\system32;c:\windows;e:\php7.4;c:\windows\system32\wbem;c:\windows\system32\windowspowershell\v1.0\;c:\program files (x86)\common files\oracle\java\javapath;c:\windows\system32\openssh\;c:\program files (x86)\nvidia corporation\physx\common;c:\program files\nvidia corporation\nvidia nvdlisr;c:\program files\amazon\awscliv2\;c:\program files\git\cmd;c:\sysgcc\raspberry\bin;c:\program files\dotnet\;c:\program files\microsoft sql server\130\tools\binn\;c:\program files\docker\docker\resources\bin;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Users\boles\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\boles\AppData\Local\Programs\Python\Python310\;c:\utils;C:\Users\boles\AppData\Local\Microsoft\WindowsApps;C:\Users\boles\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\boles\GitHubDesktop\bin;C:\Users\boles\AppData\Local\GitHubDesktop\bin;C:\Users\boles\.dotnet\tools;C:\Users\boles\AppData\Local\Microsoft\WindowsApps;C:\Users\boles\AppData\Roaming\Composer\vendor\bin;C:\Users\boles\AppData\Roaming\npm;C:\Users\boles\.deno\bin;C:\Users\boles\.dotnet\tools;C:\Program Files\OpenSSL-Win64\bin;
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  18.18.2
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/bodyparser: Not found
+      at params.callback [as _callback] (C:\Users\boles\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66138:18)
+      at self.callback (C:\Users\boles\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
+      at Request.emit (node:events:517:28)
+      at Request.<anonymous> (C:\Users\boles\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
+      at Request.emit (node:events:517:28)
+      at IncomingMessage.<anonymous> (C:\Users\boles\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
+      at Object.onceWrapper (node:events:631:28)
+      at IncomingMessage.emit (node:events:529:35)
+      at endReadableNT (node:internal/streams/readable:1368:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+npm manifest: 
+  {
+      "name": "apiserver",
+      "version": "1.0.0",
+      "description": "",
+      "main": "index.js",
+      "type": "module",
+      "scripts": {
+          "dev": "nodemon index.js",
+          "start": "node index.js",
+          "migrate": "node migrate.js"
+      },
+      "keywords": [],
+      "author": "",  
+      "license": "ISC",
+      "dependencies": {
+          "cors": "^2.8.5",
+          "express": "^4.18.1",
+          "express-async-handler": "^1.2.0",
+          "express-jwt": "^8.4.1",
+          "fs": "^0.0.1-security",
+          "http": "^0.0.1-security",
+          "https": "^1.0.0",
+          "logger": "^0.0.1",
+          "node-cron": "^3.0.3",
+          "path": "^0.12.7",
+          "pouchdb": "^8.0.1",
+          "sqlite3": "^5.1.6",
+          "uuid": "^9.0.0",
+          "ws": "^8.13.0"
+      }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
