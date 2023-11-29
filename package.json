@@ -1,0 +1,31 @@
+{
+    "name": "apiserver",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js",
+        "migrate": "node migrate.js"
+    },
+    "keywords": [],
+    "author": "",  
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.1",
+        "express-async-handler": "^1.2.0",
+        "express-jwt": "^8.4.1",
+        "fs": "^0.0.1-security",
+        "http": "^0.0.1-security",
+        "https": "^1.0.0",
+        "logger": "^0.0.1",
+        "node-cron": "^3.0.3",
+        "path": "^0.12.7",
+        "pouchdb": "^8.0.1",
+        "sqlite3": "^5.1.6",
+        "uuid": "^9.0.0",
+        "ws": "^8.13.0"
+    }
+}

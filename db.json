@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "username": "pink",
+      "firstname": "Miss",
+      "lastname": "Pinky",
+      "email": "pink@www.com",
+      "password": "secret",
+      "phone": "111-111-111",
+      "created_at": "2023-09-04 11:49:48",
+      "id": 9
+    },
+    {
+      "username": "black",
+      "firstname": "Mr",
+      "lastname": "Black",
+      "email": "black@eee.com",
+      "password": "secret",
+      "phone": "123-654-789",
+      "created_at": "2023-09-04 12:04:43",
+      "id": 10
+    },
+    {
+      "username": "green",
+      "firstname": "Miss",
+      "lastname": "Green",
+      "email": "green@ppp.com",
+      "password": "secret",
+      "phone": "222-333-444",
+      "created_at": "2023-09-04 12:06:20",
+      "id": 11
+    },
+    {
+      "username": "brown",
+      "firstname": "Mr",
+      "lastname": "Brown",
+      "email": "brown@ttt.com",
+      "password": "secret",
+      "phone": "222-222-222",
+      "created_at": "2023-09-04 12:20:15",
+      "id": 12
+    },
+    {
+      "username": "goldie",
+      "firstname": "Mr",
+      "lastname": "Gold",
+      "email": "gold@www.com",
+      "password": "secret",
+      "phone": "321-321-321",
+      "created_at": "2023-09-04 13:18:32",
+      "id": 13
+    },
+    {
+      "username": "patches33",
+      "firstname": "Mr",
+      "lastname": "Patches33",
+      "email": "p33@sss.com",
+      "password": "secret",
+      "phone": "444-555-666",
+      "created_at": "2023-09-04 20:21:51",
+      "id": 14
+    }
+  ]
+}
