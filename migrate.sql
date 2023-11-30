@@ -54,3 +54,15 @@
         PRIMARY KEY(`id` AUTOINCREMENT)
     );
     CREATE INDEX idx_symbol_forex ON forex(symbol);
+
+	CREATE TABLE `future` (
+        `id`        integer,
+        `symbol`    varchar NOT NULL,
+        `name`      varchar NOT NULL,
+        `date`      TIMESTAMP DEFAULT (datetime('now','localtime')),
+        `price`     real,
+        `price_change` real,
+        `created_at` TIMESTAMP DEFAULT (datetime('now','localtime')),
+        PRIMARY KEY(`id` AUTOINCREMENT)
+    );
+    CREATE INDEX idx_symbol_future ON future(symbol);

@@ -14,55 +14,19 @@ export default class HTTPServer {
         app.use(cors());
         app.use(bodyParser.json());
 
-// crypto
-        app.put("/api/crypto", async (req, res, next) => {
+// generic
+        app.put("/api/:table", async (req, res, next) => {
             const start = new Date();
-            const result = await dbservice.updateCrypto(req.body);
+            const result = await dbservice.update(req.params.table, req.body);
             res.status(200).json(result);
             console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
             this.notifyclients({ action: "DB_UPDATE" });
             next();
         });
 
-        app.get("/api/crypto", async (req, res, next) => {
+        app.get("/api/:table", async (req, res, next) => {
             const start = new Date();
-            const data = await dbservice.fetchAllCrypto();
-            res.status(200).json(data);
-            console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
-            next();
-        });
-
-// stock
-        app.put("/api/stock", async (req, res, next) => {
-            const start = new Date();
-            const result = await dbservice.updateStock(req.body);
-            res.status(200).json(result);
-            console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
-            this.notifyclients({ action: "DB_UPDATE" });
-            next();
-        });
-
-        app.get("/api/stock", async (req, res, next) => {
-            const start = new Date();
-            const data = await dbservice.fetchAllStock();
-            res.status(200).json(data);
-            console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
-            next();
-        });
-
-// forex
-        app.put("/api/forex", async (req, res, next) => {
-            const start = new Date();
-            const result = await dbservice.updateForex(req.body);
-            res.status(200).json(result);
-            console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
-            this.notifyclients({ action: "DB_UPDATE" });
-            next();
-        });
-
-        app.get("/api/forex", async (req, res, next) => {
-            const start = new Date();
-            const data = await dbservice.fetchAllForex();
+            const data = await dbservice.fetchAll(req.params.table);
             res.status(200).json(data);
             console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
             next();

@@ -11,15 +11,15 @@ class SqliteDbSvc {
         });
     }
 
-// crypto
-    async fetchAllCrypto() {
-        const sql = `select * from crypto order by symbol;`;
+// generic
+    async fetchAll(table) {
+        const sql = `select * from ${table} order by symbol;`;
         const { err, rows } = await this.query(sql, []);
         return rows;
     }
 
-    async fetchCryptoBySymbol(symbol) {
-        const sql = "select * from crypto where symbol=?;";
+    async fetchBySymbol(table, symbol) {
+        const sql = `select * from ${table} where symbol=?;`;
         const { err, row } = await this.get(sql, [symbol]);
         if (!!row) {
             return row;
@@ -27,100 +27,27 @@ class SqliteDbSvc {
         return {error: 'not found'};
     }
 
-    async updateCrypto(crypto) {
-        const row = await this.fetchCryptoBySymbol(crypto.symbol);
+    async update(table, data) {
+        const row = await this.fetchBySymbol(table, data.symbol);
         if (!!row.error) {
-            return await this.insertCrypto(crypto)
+            return await this.insert(table, data)
         }
-        let sql = `update crypto set price=?, price_change=?, date=(datetime('now','localtime')) where symbol=?`;
+        let sql = `update ${table} set price=?, price_change=?, date=(datetime('now','localtime')) where symbol=?`;
         const { err, result } = await this.execute(sql, [
-            crypto.price,
-			crypto.price_change,
-            crypto.symbol,
+            data.price,
+			data.price_change,
+            data.symbol,
         ]);
         return { err, result };
     }
 
-    async insertCrypto(crypto) {
-        let sql = `insert into crypto (symbol, name, price, price_change)
-            values ('${crypto.symbol}', '${crypto.name}', ${crypto.price}, ${crypto.price_change});`;
+    async insert(table, data) {
+        let sql = `insert into ${table} (symbol, name, price, price_change)
+            values ('${data.symbol}', '${data.name}', ${data.price}, ${data.price_change});`;
         const { err, result } = await this.execute(sql);
         return { err, result };
     }
 
-// stock
-    async fetchAllStock() {
-        const sql = `select * from stock order by symbol;`;
-        const { err, rows } = await this.query(sql, []);
-        return rows;
-    }
-
-    async fetchStockBySymbol(symbol) {
-        const sql = "select * from stock where symbol=?;";
-        const { err, row } = await this.get(sql, [symbol]);
-        if (!!row) {
-            return row;
-        }
-        return {error: 'not found'};
-    }
-
-    async updateStock(stock) {
-        const row = await this.fetchStockBySymbol(stock.symbol);
-        if (!!row.error) {
-            return await this.insertStock(stock)
-        }
-        let sql = `update stock set price=?, price_change=?, date=(datetime('now','localtime')) where symbol=?`;
-        const { err, result } = await this.execute(sql, [
-            stock.price,
-			stock.price_change,
-            stock.symbol,
-        ]);
-        return { err, result };
-    }
-
-    async insertStock(stock) {
-        let sql = `insert into stock (symbol, name, price, price_change)
-            values ('${stock.symbol}', '${stock.name}', ${stock.price}, ${stock.price_change});`;
-        const { err, result } = await this.execute(sql);
-        return { err, result };
-    }
-
-// forex
-    async fetchAllForex() {
-        const sql = `select * from forex order by symbol;`;
-        const { err, rows } = await this.query(sql, []);
-        return rows;
-    }
-
-    async fetchForexBySymbol(symbol) {
-        const sql = "select * from forex where symbol=?;";
-        const { err, row } = await this.get(sql, [symbol]);
-        if (!!row) {
-            return row;
-        }
-        return {error: 'not found'};
-    }
-
-    async updateForex(forex) {
-        const row = await this.fetchForexBySymbol(forex.symbol);
-        if (!!row.error) {
-            return await this.insertForex(forex)
-        }
-        let sql = `update forex set price=?, price_change=?, date=(datetime('now','localtime')) where symbol=?`;
-        const { err, result } = await this.execute(sql, [
-            forex.price,
-			forex.price_change,
-            forex.symbol,
-        ]);
-        return { err, result };
-    }
-
-    async insertForex(forex) {
-        let sql = `insert into forex (symbol, name, price, price_change)
-            values ('${forex.symbol}', '${forex.name}', ${forex.price}, ${forex.price_change});`;
-        const { err, result } = await this.execute(sql);
-        return { err, result };
-    }
 // users
     async fetchAllUsers() {
         const sql = `select * from user order by created_at desc;`;
