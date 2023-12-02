@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import {} from "dotenv/config";
 import dbservice from "./sqlitedbsvc.js";
 
 //---------------------------------------------------------------
@@ -9,13 +10,20 @@ import dbservice from "./sqlitedbsvc.js";
 export default class HTTPServer {
     constructor(port) {
         this.clients = [];
-
         const app = express();
         app.use(cors());
         app.use(bodyParser.json());
+        app.use(function (req, res, next) {
+            if (req.query.key == null || req.query.key !== process.env.API_KEY) {
+                console.log("No API key supplied");
+                res.status(403).send({ error: { code: 403, message: "API key not found." } });
+            } else {
+                return next();
+            }
+        });
 
-// generic
-        app.put("/api/:table", async (req, res, next) => {
+        // generic
+        app.put("/api/v1/:table", async (req, res, next) => {
             const start = new Date();
             const result = await dbservice.update(req.params.table, req.body);
             res.status(200).json(result);
@@ -24,7 +32,7 @@ export default class HTTPServer {
             next();
         });
 
-        app.get("/api/:table", async (req, res, next) => {
+        app.get("/api/v1/:table", async (req, res, next) => {
             const start = new Date();
             const data = await dbservice.fetchAll(req.params.table);
             res.status(200).json(data);
@@ -32,11 +40,11 @@ export default class HTTPServer {
             next();
         });
 
-// user
+        // user
         app.post("/api/login", async (req, res, next) => {
             const start = new Date();
             // console.log(req.body.userid, req.body.password);
-            const result = await dbservice.fetchUserByLogin(req.body.userid, req.body.password)
+            const result = await dbservice.fetchUserByLogin(req.body.userid, req.body.password);
             res.status(200).json(result);
             console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
             next();
@@ -85,13 +93,26 @@ export default class HTTPServer {
             next();
         });
 
+        app.get("/api/ev_update", async (req, res, next) => {
+            const start = new Date();
+			this.notifyclients({ action: "DB_UPDATE" });
+            res.status(200).json({status: 'ok'});
+            console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
+            next();
+        });
+
         app.get("/api/stream", async (req, res, next) => {
             const start = new Date();
-            res.writeHead(200, {
-                "Content-Type": "text/event-stream",
-                Connection: "keep-alive",
-                "Cache-Control": "no-cache",
-            });
+			const headers = {
+		       'Content-Type': 'text/event-stream',
+		       'Access-Control-Allow-Origin': '*',
+		       'Connection': 'keep-alive',
+		       'Cache-Control': 'no-cache'
+		    };
+            res.writeHead(200, headers);
+   			const sendData = `data: ${JSON.stringify({status: 'connected'})}\n\n`;
+   			res.write(sendData);
+			// res.flush();
             console.log("%s %s %d %dms", req.method, req.url, res.statusCode, new Date() - start);
             // keep track of listening clients
             const clientId = Date.now();
@@ -115,8 +136,11 @@ export default class HTTPServer {
 
     // push message to all clients
     notifyclients(msg) {
+		console.log('notifyclients()');
         this.clients.forEach((client) => {
+			console.log(client.id);
             client.response.write(`data: ${JSON.stringify(msg)}\n\n`);
+			// client.response.flush();
         });
     }
 }

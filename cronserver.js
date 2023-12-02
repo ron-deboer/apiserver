@@ -18,12 +18,13 @@ export default class CronServer {
     }
 
     task1() {
-        cron.schedule('*/10 * * * *', () => {
+        cron.schedule('* * * * *', () => {
           console.log("%s : Running Task-1", new Date().toTimeString());
-		  this.fetch('forex');
-          this.fetch('crypto');
-		  this.fetch('stock');
-		  this.fetch('future');
+		  // this.fetch('forex');
+          // this.fetch('crypto');
+		  // this.fetch('stock');
+		  // this.fetch('future');
+		  fetch('http://localhost:3000/api/ev_update?key=ATspzCU03GCamCx39U5aK89CfciuHllK');
         }, {
            scheduled: true,
            timezone: "Australia/Melbourne"
@@ -35,7 +36,8 @@ export default class CronServer {
         fetch(url)
           .then(response => response.json())
           .then(data => {
-			  if (data.length == 0) {
+			  // console.log(data)
+			  if (!Array.isArray(data)) {
 				  console.log(`No ${table} data returned`);
 			  } else {
 	              data.forEach(async (c, idx) => {
@@ -51,5 +53,4 @@ export default class CronServer {
           })
           .catch(error => console.error('Error:', error));
     }
-
 }
