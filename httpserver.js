@@ -1,4 +1,7 @@
 import express from "express";
+import fs from "fs";
+import https from "https";
+import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {} from "dotenv/config";
@@ -130,8 +133,19 @@ export default class HTTPServer {
             next();
         });
 
-        app.listen(port);
-        console.log("http server listening on port %d", port);
+        // app.listen(port);
+
+        http.createServer(app).listen(port, function () {
+    	      console.log(`https listening on ${port}`);
+  	  });
+	https.createServer(
+    	  {
+      	      key: fs.readFileSync("server.key"),
+      	      cert: fs.readFileSync("server.cert"),
+    	  }, app).listen(443, function () {
+    	      console.log(`https listening on 443`);
+  	  });
+    
     }
 
     // push message to all clients

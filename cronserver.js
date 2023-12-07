@@ -18,12 +18,12 @@ export default class CronServer {
     }
 
     task1() {
-        cron.schedule('* * * * *', () => {
+        cron.schedule('*/30 * * * *', () => {
           console.log("%s : Running Task-1", new Date().toTimeString());
-		  // this.fetch('forex');
-          // this.fetch('crypto');
-		  // this.fetch('stock');
-		  // this.fetch('future');
+		  this.fetch('forex');
+                  this.fetch('crypto');
+		  this.fetch('stock');
+		  this.fetch('future');
 		  fetch('http://localhost:3000/api/ev_update?key=ATspzCU03GCamCx39U5aK89CfciuHllK');
         }, {
            scheduled: true,
